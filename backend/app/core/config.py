@@ -41,6 +41,20 @@ class Settings(BaseSettings):
         list[AnyUrl] | str, BeforeValidator(parse_cors)
     ] = []
 
+    # Seller GST settings (India)
+    # Example GSTIN uses state code "29" (Karnataka)
+    SELLER_GSTIN: str = "29ABCDE1234F1Z5"
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def SELLER_STATE_CODE(self) -> str:
+        """Derive state code from GSTIN (first two characters)."""
+        try:
+            code = str(self.SELLER_GSTIN)[:2]
+            return code if len(code) == 2 else "00"
+        except Exception:
+            return "00"
+
     @computed_field  # type: ignore[prop-decorator]
     @property
     def all_cors_origins(self) -> list[str]:
