@@ -93,6 +93,7 @@ class Settings(BaseSettings):
     EMAIL_TEST_USER: EmailStr = "test@example.com"
     FIRST_SUPERUSER: EmailStr
     FIRST_SUPERUSER_PASSWORD: str
+    SELLER_GSTIN: str = "27ABCDE1234F1Z5"  # Default example for Maharashtra
 
     def _check_default_secret(self, var_name: str, value: str | None) -> None:
         if value == "changethis":
