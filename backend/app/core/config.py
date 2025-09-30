@@ -94,6 +94,17 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER: EmailStr
     FIRST_SUPERUSER_PASSWORD: str
 
+    # GST Settings for India e-commerce
+    SELLER_GSTIN: str = "29ABCDE1234F1Z5"  # Example Karnataka GSTIN
+    SELLER_NAME: str = "Example E-commerce Pvt Ltd"
+    SELLER_ADDRESS: str = "123, Brigade Road, Bangalore, Karnataka - 560001"
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def SELLER_STATE_CODE(self) -> str:
+        """Extract state code from GSTIN (first 2 digits)"""
+        return self.SELLER_GSTIN[:2] if self.SELLER_GSTIN else "29"
+
     def _check_default_secret(self, var_name: str, value: str | None) -> None:
         if value == "changethis":
             message = (
